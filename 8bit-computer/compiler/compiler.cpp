@@ -9,7 +9,7 @@ using namespace std;
 
 int main() {
     string code;
-    ifstream inputFile("input.txt"); 
+    ifstream inputFile("input.txt"); // Open the input file
 
     if (!inputFile) {
         cerr << "Error: Could not open the input file." << endl;
@@ -17,10 +17,10 @@ int main() {
     }
 
     stringstream buffer;
-    buffer << inputFile.rdbuf(); 
-    code = buffer.str(); 
+    buffer << inputFile.rdbuf(); // Read the file into a stringstream
+    code = buffer.str(); // Convert the stringstream into a string
 
-    inputFile.close(); 
+    inputFile.close(); // Close the file
 
     Lexer lexer(code);
     Parser parser(lexer);
@@ -29,7 +29,7 @@ int main() {
     CodeGenerator generator;
     generator.generate(root);
 
-    delete root;
+    delete root; // Clean up
 
     return 0;
 }

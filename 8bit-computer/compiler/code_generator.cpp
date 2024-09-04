@@ -1,7 +1,6 @@
 #include "code_generator.h"
 #include <iostream>
 using namespace std;
-
 string CodeGenerator::getNewLabel() {
     return "label_" + to_string(labelCount++);
 }
