@@ -1,7 +1,7 @@
- a;
- b;
+ int a ;
+ int b ;
 a = 10;
 b = 20;
-if (a == b) {
+if (b == a) {
     a = a + 1;
 }

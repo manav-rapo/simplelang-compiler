@@ -1,8 +1,7 @@
-
 // parser.h
 
-#ifndef parser_h
-#define parser_h
+#ifndef PARSER_H
+#define PARSER_H
 
 #include "lexer.h"
 #include <vector>
