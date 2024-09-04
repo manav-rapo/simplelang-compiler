@@ -1,3 +1,5 @@
+// lexer.h
+
 #ifndef LEXER_H
 #define LEXER_H
 
@@ -7,6 +9,7 @@
 enum TokenType {
     TOKEN_INT,
     TOKEN_IF,
+    TOKEN_ELSE,
     TOKEN_IDENTIFIER,
     TOKEN_NUMBER,
     TOKEN_FLOAT,
@@ -21,10 +24,11 @@ enum TokenType {
     TOKEN_GREATER_EQUAL,
     TOKEN_LBRACE,
     TOKEN_RBRACE,
+    TOKEN_LPAREN,
+    TOKEN_RPAREN,
     TOKEN_SEMICOLON,
     TOKEN_EOF,
-    TOKEN_UNKNOWN,
-    TOKEN_ELSE
+    TOKEN_UNKNOWN
 };
 
 struct Token {

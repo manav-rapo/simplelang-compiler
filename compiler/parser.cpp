@@ -1,3 +1,6 @@
+
+// parser.cpp
+
 #include "parser.h"
 #include <iostream>
 #include <stdexcept> // For runtime_error
@@ -13,7 +16,6 @@ void Parser::eat(TokenType type) {
     else
         throw runtime_error("Unexpected token type!");
 }
-
 
 ast* Parser::parse() {
     ast* root = new ast{"program", {}};
@@ -70,9 +72,9 @@ ast* Parser::assignment() {
 
 ast* Parser::conditional() {
     eat(TOKEN_IF);
-    eat(TOKEN_LBRACE);
+    eat(TOKEN_LPAREN); // Adjusted to use parentheses for condition
     ast* exprNode = expression();
-    eat(TOKEN_RBRACE);
+    eat(TOKEN_RPAREN); // Adjusted to use parentheses for condition
     eat(TOKEN_LBRACE);
     ast* stmtNode = statement();
     eat(TOKEN_RBRACE);
@@ -115,6 +117,11 @@ ast* Parser::term() {
         string var = currentToken.text;
         eat(TOKEN_IDENTIFIER);
         return new ast{var, {}};
+    } else if (currentToken.type == TOKEN_LPAREN) {   // Added handling for parentheses
+        eat(TOKEN_LPAREN);
+        ast* node = expression();
+        eat(TOKEN_RPAREN);
+        return node;
     }
     return nullptr;
 }

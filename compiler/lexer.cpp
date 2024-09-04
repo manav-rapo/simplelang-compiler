@@ -1,3 +1,5 @@
+// lexer.cpp
+
 #include "lexer.h"
 #include <iostream>
 
@@ -46,6 +48,8 @@ Token Lexer::getNextToken() {
             case '-': return Token{TOKEN_MINUS, "-"};
             case '{': return Token{TOKEN_LBRACE, "{"};
             case '}': return Token{TOKEN_RBRACE, "}"};
+            case '(': return Token{TOKEN_LPAREN, "("};  // Added
+            case ')': return Token{TOKEN_RPAREN, ")"};  // Added
             case ';': return Token{TOKEN_SEMICOLON, ";"};
             default: return Token{TOKEN_UNKNOWN, std::string(1, c)};
         }
@@ -58,7 +62,7 @@ Token Lexer::identifier(char c) {
     while (pos < source.length() && isalnum(source[pos])) text += source[pos++];
     if (text == "int") return Token{TOKEN_INT, text};
     if (text == "if") return Token{TOKEN_IF, text};
-    // Add other keywords here
+    if (text == "else") return Token{TOKEN_ELSE, text}; // Added handling for "else"
     return Token{TOKEN_IDENTIFIER, text};
 }
 
