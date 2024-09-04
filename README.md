@@ -12,7 +12,7 @@ run the compiler:
 ```bash
 g++ lexer.cpp parser.cpp code_generator.cpp compiler.cpp -o compiler
 ```
-after g++ run main file :
+after running g++ command now run main file :
 
 ```bash
 ./compiler
