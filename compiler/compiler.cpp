@@ -4,32 +4,24 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-
 using namespace std;
 
 int main() {
     string code;
-    ifstream inputFile("input.txt"); 
-
-    if (!inputFile) {
-        cerr << "Error: Could not open the input file." << endl;
+    ifstream input("input.txt"); 
+    if (!input) {
+        cerr<<"file annot be open"<<endl;
         return 1;
     }
-
     stringstream buffer;
-    buffer << inputFile.rdbuf(); 
+    buffer << input.rdbuf(); 
     code = buffer.str(); 
-
-    inputFile.close(); 
-
+    input.close(); 
     Lexer lexer(code);
     Parser parser(lexer);
     ast* root = parser.parse();
-
-    CodeGenerator generator;
-    generator.generate(root);
-
+    Codegenerator generat;
+    generat.generate(root);
     delete root;
-
     return 0;
 }

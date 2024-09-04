@@ -26,7 +26,7 @@ public:
 
 private:
     Lexer& lexer;
-    Token currentToken;
+    token currentToken;
 
     void eat(TokenType type);
     ast* statement();

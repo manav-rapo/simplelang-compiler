@@ -2,11 +2,11 @@
 #include <iostream>
 using namespace std;
 
-string CodeGenerator::getNewLabel() {
-    return "label_" + to_string(labelCount++);
+string Codegenerator::getLabel() {
+    return "label_" + to_string(Count++);
 }
 
-void CodeGenerator::generate(ast* node) {
+void Codegenerator::generate(ast* node) {
     if (node == nullptr)
         return;
 
@@ -31,8 +31,8 @@ void CodeGenerator::generate(ast* node) {
     else if (node->value == "if") {
        
         generate(node->children[0]); 
-        string elseLabel = getNewLabel();
-        string endIfLabel = getNewLabel();
+        string elseLabel = getLabel();
+        string endIfLabel = getLabel();
         cout << "JZ " << elseLabel << "\n";
         generate(node->children[1]); 
         cout << "JMP " << endIfLabel << "\n";

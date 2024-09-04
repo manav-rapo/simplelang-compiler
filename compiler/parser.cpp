@@ -3,20 +3,17 @@
 
 #include "parser.h"
 #include <iostream>
-#include <stdexcept> // For runtime_error
+#include <stdexcept> 
 using namespace std;
-
 Parser::Parser(Lexer& lexer) : lexer(lexer) {
     currentToken = lexer.getNextToken();
 }
-
 void Parser::eat(TokenType type) {
     if (currentToken.type == type)
         currentToken = lexer.getNextToken();
     else
-        throw runtime_error("Unexpected token type!");
+        throw runtime_error("Unexpected token");
 }
-
 ast* Parser::parse() {
     ast* root = new ast{"program", {}};
     while (currentToken.type != TOKEN_EOF) {
@@ -28,7 +25,6 @@ ast* Parser::parse() {
     }
     return root;
 }
-
 ast* Parser::statement() {
     if (currentToken.type == TOKEN_INT) {
         eat(TOKEN_INT);
@@ -40,10 +36,9 @@ ast* Parser::statement() {
     }
     return nullptr;
 }
-
 ast* Parser::variableDeclaration() {
     if (currentToken.type != TOKEN_IDENTIFIER) {
-        cout << "Syntax error! Expected identifier after 'int'" << endl;
+        cout << "Syntax error" << endl;
         return nullptr;
     }
     string varName = currentToken.text;
@@ -55,7 +50,6 @@ ast* Parser::variableDeclaration() {
     node->children.push_back(varNode);
     return node;
 }
-
 ast* Parser::assignment() {
     string varName = currentToken.text;
     eat(TOKEN_IDENTIFIER);
@@ -69,12 +63,11 @@ ast* Parser::assignment() {
     node->children.push_back(exprNode);
     return node;
 }
-
 ast* Parser::conditional() {
     eat(TOKEN_IF);
-    eat(TOKEN_LPAREN); // Adjusted to use parentheses for condition
+    eat(TOKEN_LPAREN); 
     ast* exprNode = expression();
-    eat(TOKEN_RPAREN); // Adjusted to use parentheses for condition
+    eat(TOKEN_RPAREN); 
     eat(TOKEN_LBRACE);
     ast* stmtNode = statement();
     eat(TOKEN_RBRACE);
@@ -90,7 +83,6 @@ ast* Parser::conditional() {
     }
     return node;
 }
-
 ast* Parser::expression() {
     ast* node = term();
 
@@ -104,10 +96,8 @@ ast* Parser::expression() {
         newNode->children.push_back(right);
         node = newNode;
     }
-
     return node;
 }
-
 ast* Parser::term() {
     if (currentToken.type == TOKEN_NUMBER) {
         string num = currentToken.text;
@@ -117,7 +107,7 @@ ast* Parser::term() {
         string var = currentToken.text;
         eat(TOKEN_IDENTIFIER);
         return new ast{var, {}};
-    } else if (currentToken.type == TOKEN_LPAREN) {   // Added handling for parentheses
+    } else if (currentToken.type == TOKEN_LPAREN) { 
         eat(TOKEN_LPAREN);
         ast* node = expression();
         eat(TOKEN_RPAREN);

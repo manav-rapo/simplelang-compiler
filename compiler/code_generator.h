@@ -5,14 +5,14 @@
 #include <map>
 #include <string>
 
-class CodeGenerator {
+class Codegenerator {
 public:
     void generate(ast* node);
 private:
     map<string, int> symbolTable;
-    int labelCount = 0;
+    int Count = 0;
 
-    string getNewLabel();
+    string getLabel();
 };
 
 #endif 

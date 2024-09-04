@@ -4,78 +4,71 @@
 #include <iostream>
 using namespace std;
 
-Lexer::Lexer(const std::string &source) : source(source), pos(0) {}
-
-Token Lexer::getNextToken() {
-    while (pos < source.length()) {
-        char c = source[pos++];
+Lexer::Lexer(const string &source) : source(source), p(0) {}
+token Lexer::getNextToken() {
+    while (p < source.length()) {
+        char c = source[p++];
         if (isspace(c)) continue;
         if (isalpha(c)) return identifier(c);
         if (isdigit(c)) return number(c);
-
-        // Boundary check for two-character operators
-        if (pos < source.length()) {
+        if (p < source.length()) {
             switch (c) {
                 case '=':
-                    if (source[pos] == '=') {
-                        pos++;
-                        return Token{TOKEN_EQUAL, "=="};
+                    if (source[p] == '=') {
+                        p++;
+                        return token{TOKEN_EQUAL, "=="};
                     }
-                    return Token{TOKEN_ASSIGN, "="};
+                    return token{TOKEN_ASSIGN, "="};
                 case '!':
-                    if (source[pos] == '=') {
-                        pos++;
-                        return Token{TOKEN_NOT_EQUAL, "!="};
+                    if (source[p] == '=') {
+                        p++;
+                        return token{TOKEN_NOT_EQUAL, "!="};
                     }
                     break;
                 case '<':
-                    if (source[pos] == '=') {
-                        pos++;
-                        return Token{TOKEN_LESS_EQUAL, "<="};
+                    if (source[p] == '=') {
+                        p++;
+                        return token{TOKEN_LESS_EQUAL, "<="};
                     }
-                    return Token{TOKEN_LESS, "<"};
+                    return token{TOKEN_LESS, "<"};
                 case '>':
-                    if (source[pos] == '=') {
-                        pos++;
-                        return Token{TOKEN_GREATER_EQUAL, ">="};
-                    }
-                    return Token{TOKEN_GREATER, ">"};
-            }
+                    if (source[p] == '=') {
+                        p++;
+                        return token{TOKEN_GREATER_EQUAL, ">="};
+                                            }
+            return token{TOKEN_GREATER, ">"};
+         }
         }
-
-        // Single-character tokens
         switch (c) {
-            case '+': return Token{TOKEN_PLUS, "+"};
-            case '-': return Token{TOKEN_MINUS, "-"};
-            case '{': return Token{TOKEN_LBRACE, "{"};
-            case '}': return Token{TOKEN_RBRACE, "}"};
-            case '(': return Token{TOKEN_LPAREN, "("};  // Added
-            case ')': return Token{TOKEN_RPAREN, ")"};  // Added
-            case ';': return Token{TOKEN_SEMICOLON, ";"};
-            default: return Token{TOKEN_UNKNOWN, std::string(1, c)};
+            case '+': return token{TOKEN_PLUS, "+"};
+            case '-': return token{TOKEN_MINUS, "-"};
+            case '{': return token{TOKEN_LBRACE, "{"};
+            case '}': return token{TOKEN_RBRACE, "}"};
+            case '(': return token{TOKEN_LPAREN, "("};  
+            case ')': return token{TOKEN_RPAREN, ")"};  
+            case ';': return token{TOKEN_SEMICOLON, ";"};
+            default: return token{TOKEN_UNKNOWN,string(1, c)};
         }
     }
-    return Token{TOKEN_EOF, ""};
+    return token{TOKEN_EOF, ""};
 }
-
-Token Lexer::identifier(char c) {
-    std::string text(1, c);
-    while (pos < source.length() && isalnum(source[pos])) text += source[pos++];
-    if (text == "int") return Token{TOKEN_INT, text};
-    if (text == "if") return Token{TOKEN_IF, text};
-    if (text == "else") return Token{TOKEN_ELSE, text}; // Added handling for "else"
-    return Token{TOKEN_IDENTIFIER, text};
-}
-
-Token Lexer::number(char c) {
+token Lexer::identifier(char c) {
     string text(1, c);
-    bool isFloatingPoint = false;
-    while (pos < source.length() && (isdigit(source[pos]) || source[pos] == '.')) {
-        if (source[pos] == '.') {
-            if (isFloatingPoint) break; // Second '.' encountered, stop parsing
-            isFloatingPoint = true;
+    while (p < source.length() && isalnum(source[p])) text += source[p++];
+    if (text == "int") return token{TOKEN_INT, text};
+    if (text == "if") return token{TOKEN_IF, text};
+    if (text == "else") return token{TOKEN_ELSE, text}; 
+        return token{TOKEN_IDENTIFIER, text};
+}
+token Lexer::number(char c) {
+    string text(1, c);
+    bool isfloat = false;
+    while (p < source.length() && (isdigit(source[p]) || source[p] == '.')) {
+        if (source[p] == '.') {
+            if (isfloat) break; 
+            isfloat = true;
         }
-        text += source[pos++];
+        text += source[p++];
     }
-    return isFloatingPoint ? Token{TOKEN_FLOAT, text} : Token{TOKEN_NUMBER, text};
+    return isfloat ? token{TOKEN_FLOAT, text} : token{TOKEN_NUMBER, text};
 }
