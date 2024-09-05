@@ -1,6 +1,6 @@
 #include "lexer.h"
 #include "parser.h"
-#include "code_generator.h"
+#include "codegenerator.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
