@@ -1,5 +1,5 @@
-#ifndef code_generator_h
-#define code_generator_h
+#ifndef codegenerator_h
+#define codegenerator_h
 
 #include "parser.h"
 #include <map>
