@@ -26,13 +26,13 @@ void codegenerator::generate(ast* n) {
     else if (n->value == "if") {
        
         generate(n->children[0]); 
-        string elseLabel = getlabel();
-        string endIfLabel = getlabel();
-        cout << "JZ " << elseLabel <<endl;
+        string elselabel = getlabel();
+        string iflabel = getlabel();
+        cout << "JZ " << elselabel <<endl;
         generate(n->children[1]); 
-        cout << "JMP " << endIfLabel <<endl;
-        cout << elseLabel << ":\n";
-        cout << endIfLabel << ":\n";
+        cout << "JMP " << iflabel <<endl;
+        cout << elselabel << ":\n";
+        cout << iflabel << ":\n";
     }
     else if (n->value == "+") {
       
