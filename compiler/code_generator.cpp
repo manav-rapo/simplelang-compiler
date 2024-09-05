@@ -2,57 +2,52 @@
 #include <iostream>
 using namespace std;
 
-string Codegenerator::getLabel() {
+string codegenerator::getlabel() {
     return "label_" + to_string(Count++);
 }
-
-void Codegenerator::generate(ast* node) {
-    if (node == nullptr)
-        return;
-
-    if (node->value == "program") {
-        for (auto child : node->children) {
+void codegenerator::generate(ast* n) {
+ if (n == nullptr)
+        return;       
+ if (n->value == "program") {
+        for (auto child : n->children) {
             generate(child);
-        }
+   } }
+    else if (n->value == "varDecl") {
+        string namev = n->children[0]->value;
+        if (table.find(namev) == table.end()) {
+            table[namev] = 0; 
     }
-    else if (node->value == "varDecl") {
-        
-        string varName = node->children[0]->value;
-        if (symbolTable.find(varName) == symbolTable.end()) {
-            symbolTable[varName] = 0; 
-        }
     }
-    else if (node->value == "assign") {
-        
-        string varName = node->children[0]->value;
-        generate(node->children[1]); 
-        cout << "STA " << varName << "\n";
+    else if (n->value == "assign") {
+        string namev = n->children[0]->value;
+        generate(n->children[1]); 
+        cout << "STA " << namev << "\n";
     }
-    else if (node->value == "if") {
+    else if (n->value == "if") {
        
-        generate(node->children[0]); 
-        string elseLabel = getLabel();
-        string endIfLabel = getLabel();
-        cout << "JZ " << elseLabel << "\n";
-        generate(node->children[1]); 
-        cout << "JMP " << endIfLabel << "\n";
+        generate(n->children[0]); 
+        string elseLabel = getlabel();
+        string endIfLabel = getlabel();
+        cout << "JZ " << elseLabel <<endl;
+        generate(n->children[1]); 
+        cout << "JMP " << endIfLabel <<endl;
         cout << elseLabel << ":\n";
         cout << endIfLabel << ":\n";
     }
-    else if (node->value == "+") {
+    else if (n->value == "+") {
       
-        generate(node->children[0]);
-        cout << "ADD " << node->children[1]->value << "\n";
+        generate(n->children[0]);
+        cout << "ADD " << n->children[1]->value << "\n";
     }
-    else if (node->value == "-") {
+    else if (n->value == "-") {
 
-        generate(node->children[0]); 
-        cout << "SUB " << node->children[1]->value << "\n";
+        generate(n->children[0]); 
+        cout << "SUB " << n->children[1]->value << "\n";
     }
-    else if (node->value == "==") {
-        cout << "CMP " << node->children[1]->value << "\n"; 
+    else if (n->value == "==") {
+        cout << "CMP " << n->children[1]->value << "\n"; 
     }
     else {
-        cout << "LDA " << node->value << "\n";
+        cout << "LDA " << n->value << "\n";
     }
 }

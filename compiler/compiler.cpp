@@ -10,7 +10,7 @@ int main() {
     string code;
     ifstream input("input.txt"); 
     if (!input) {
-        cerr<<"file annot be open"<<endl;
+        cerr<<"file cannot be open"<<endl;
         return 1;
     }
     stringstream buffer;
@@ -20,7 +20,7 @@ int main() {
     Lexer lexer(code);
     Parser parser(lexer);
     ast* root = parser.parse();
-    Codegenerator generat;
+    codegenerator generat;
     generat.generate(root);
     delete root;
     return 0;

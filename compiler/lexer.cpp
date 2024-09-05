@@ -1,16 +1,17 @@
-// lexer.cpp
-
 #include "lexer.h"
 #include <iostream>
 using namespace std;
 
 Lexer::Lexer(const string &source) : source(source), p(0) {}
-token Lexer::getNextToken() {
+token Lexer::gettoken() {
     while (p < source.length()) {
         char c = source[p++];
-        if (isspace(c)) continue;
-        if (isalpha(c)) return identifier(c);
-        if (isdigit(c)) return number(c);
+        if (isspace(c)) 
+        continue;
+        if (isalpha(c)) 
+        return identifier(c);
+        if (isdigit(c)) 
+        return number(c);
         if (p < source.length()) {
             switch (c) {
                 case '=':
@@ -31,11 +32,11 @@ token Lexer::getNextToken() {
                         return token{TOKEN_LESS_EQUAL, "<="};
                     }
                     return token{TOKEN_LESS, "<"};
-                case '>':
-                    if (source[p] == '=') {
+     case '>':
+     if (source[p] == '=') {
                         p++;
                         return token{TOKEN_GREATER_EQUAL, ">="};
-                                            }
+                                             }
             return token{TOKEN_GREATER, ">"};
          }
         }
