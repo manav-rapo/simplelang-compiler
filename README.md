@@ -10,7 +10,7 @@ cd compiler
 run the compiler:
 
 ```bash
-g++ lexer.cpp parser.cpp code_generator.cpp compiler.cpp -o compiler
+g++ lexer.cpp parser.cpp codegenerator.cpp compiler.cpp -o compiler
 ```
 after running g++ command now run main file :
 
