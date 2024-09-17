@@ -83,7 +83,7 @@ ast* Parser::conditional() {
 ast* Parser::expression() {
     ast* n = term();
 
-    while (ctoken.type == TOKEN_PLUS || ctoken.type == TOKEN_MINUS || ctoken.type == TOKEN_EQUAL) {
+    while (ctoken.type == TOKEN_PLUS || ctoken.type == TOKEN_MINUS || ctoken.type == TOKEN_EQUAL|| ctoken.type == TOKEN_LESS_EQUAL) {
         string op = ctoken.text;
         TokenType optype = ctoken.type;
         eat(ctoken.type);

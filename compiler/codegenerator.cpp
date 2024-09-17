@@ -47,6 +47,10 @@ void codegenerator::generate(ast* n) {
     else if (n->value == "==") {
         cout << "CMP " << n->children[1]->value << "\n"; 
     }
+    
+    else if (n->value == "<=") {
+        cout << "CMP " << n->children[1]->value << "\n"; 
+    }
     else {
         cout << "LDA " << n->value << "\n";
     }
